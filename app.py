@@ -70,16 +70,22 @@ class CajeroSchema(BaseModel):
     @field_validator("dni")
     @classmethod
     def validar_dni(cls, value: str) -> str:
-        if (len(value.strip())==0 or len(value.strip()) != 8):
+        dni_limpio = value.strip()
+        if (len(dni_limpio.strip())==0 or len(value.strip()) != 8):
             raise ValueError("Error: El DNI no puede estar vacio y debe tener 8 digitos")
-        return value
+        if not dni_limpio.isdigit():
+            raise ValueError("El DNI debe contener solo números")
+        return dni_limpio
     
     @field_validator("pin")
     @classmethod
     def validar_pin(cls, value: str) -> str:
-        if (len(value.strip())==0 or len(value.strip()) != 6):
+        pin_limpio = value.strip()
+        if (len(pin_limpio.strip())==0 or len(value.strip()) != 6):
             raise ValueError("Error: El PIN no puede estar vacio y debe tener 6 digitos")
-        return value
+        if not pin_limpio.isdigit():
+            raise ValueError("El PIN debe contener solo números")
+        return pin_limpio
 
 
 class Cajero:
